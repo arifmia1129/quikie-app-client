@@ -1,12 +1,12 @@
 import { useQuery } from "react-query"
 
 const useSavedStock = () => {
-    const { isLoading, data, refetch } = useQuery('repoData', () =>
-        fetch('https://api.github.com/repos/tannerlinsley/react-query').then(res =>
+    const { isLoading, data: SavedStock, refetch } = useQuery('repoData', () =>
+        fetch('http://localhost:5000/stock').then(res =>
             res.json()
         )
     )
-    return [data, isLoading, refetch]
+    return [SavedStock, isLoading, refetch]
 }
 
 export default useSavedStock;

@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { GoPrimitiveDot } from 'react-icons/go';
+import { toast } from 'react-toastify';
+import useSavedStock from '../hooks/useSavedStock';
+import Loading from '../shared/Loading';
 const Detail = ({ stock }) => {
-    const { name, symbol, market_cap, current_price, id } = stock;
-    const [savedStock, setSavedStock] = useState([]);
-    const [savedStatus, setSavedStatus] = useState(false);
-
+    const { name, symbol, market_cap, current_price, id } = stock; const [savedStatus, setSavedStatus] = useState(false);
+    const [savedStock, isLoading, refetch] = useSavedStock();
     useEffect(() => {
-        fetch("http://localhost:5000/stock")
-            .then(res => res.json())
-            .then(data => {
-                setSavedStock(data);
-            });
-    }, [])
-    useEffect(() => {
-        savedStock.forEach(s => {
+        savedStock?.forEach(s => {
             if (s.id === id) {
                 setSavedStatus(true);
             }
         })
-    }, [savedStock, id])
+    }, [id, savedStock])
+    if (isLoading || true) {
+        <Loading />
+    }
     const handleSaved = () => {
         fetch("http://localhost:5000/stock", {
             method: "POST",
@@ -29,7 +26,10 @@ const Detail = ({ stock }) => {
         })
             .then(res => res.json())
             .then(result => {
-                console.log(result);
+                if (result.acknowledged && result.insertedId) {
+                    toast.success("Data saved success!");
+                    refetch();
+                }
             })
 
     }
@@ -54,7 +54,7 @@ const Detail = ({ stock }) => {
             </td>
             <td class="px-6 py-4">
                 {
-                    savedStatus ? <button onClick={handleSaved} className='bg-[#18A0FB] w-[130px] h-[40px] rounded-lg text-white'>View</button> : <button onClick={handleSaved} className='bg-[#18A0FB] w-[130px] h-[40px] rounded-lg text-white'>Save Data</button>
+                    savedStatus ? <button onClick={handleSaved} className='bg-[#6D5BD0] w-[99px] h-[40px] rounded-lg text-white'>View</button> : <button onClick={handleSaved} className='bg-[#18A0FB] w-[130px] h-[40px] rounded-lg text-white'>Save Data</button>
                 }
             </td>
             <td class="px-6 py-4">
