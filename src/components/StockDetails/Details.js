@@ -50,7 +50,7 @@ const Details = () => {
                     <input onChange={e => setSearchText(e?.target?.value)} type="text" id="table-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search by name" />
                 </div>
             </div>
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <table class="w-full mx-auto text-center text-sm text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
 
