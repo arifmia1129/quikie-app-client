@@ -25,8 +25,9 @@ const Details = () => {
     }, [currentPage])
 
     useEffect(() => {
-
-    }, [])
+        const searched = fullStocks.filter(s => s.name.toLowerCase().includes(searchText.toLowerCase()));
+        setSearchStocks(searched);
+    }, [searchText, fullStocks])
 
 
     const handleIncreasePage = () => {
@@ -71,7 +72,7 @@ const Details = () => {
                 </thead>
                 <tbody>
                     {
-                        stocks?.map(stock => <Detail
+                        (searchText ? searchStocks : stocks)?.map(stock => <Detail
                             key={stock.id}
                             stock={stock}
                         />)
@@ -79,21 +80,23 @@ const Details = () => {
                 </tbody>
 
             </table>
-            <div className='px-5'>
-                <div className='flex justify-end items-center'>
-                    <div class="px-6 py-4">{(currentPage * 5) + 1}-{5 * (currentPage + 1)} of {fullStocks?.length}</div>
-                    <div>
-                        <div className='flex items-center'>
-                            <button className='pr-10' onClick={handleDecreasePage}>
-                                <MdOutlineKeyboardArrowLeft />
-                            </button>
-                            <button onClick={handleIncreasePage}>
-                                <MdOutlineKeyboardArrowRight />
-                            </button>
+            {
+                !searchText && <div className='px-5'>
+                    <div className='flex justify-end items-center'>
+                        <div class="px-6 py-4">{(currentPage * 5) + 1}-{5 * (currentPage + 1)} of {fullStocks?.length}</div>
+                        <div>
+                            <div className='flex items-center'>
+                                <button className='pr-10' onClick={handleDecreasePage}>
+                                    <MdOutlineKeyboardArrowLeft />
+                                </button>
+                                <button onClick={handleIncreasePage}>
+                                    <MdOutlineKeyboardArrowRight />
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     );
 };
