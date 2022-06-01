@@ -6,7 +6,11 @@ const Details = () => {
     useEffect(() => {
         fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false")
             .then(res => res.json())
-            .then(data => setStocks(data))
+            .then(data => {
+                const totalPage = Math.ceil(data.length / 5);
+                const currentPage = 1;
+                setStocks(data.slice(currentPage * 5, (5 * (currentPage + 1))));
+            })
     }, [])
     return (
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-6xl mx-auto my-10 border">
