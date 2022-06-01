@@ -2,7 +2,7 @@ import { useQuery } from "react-query"
 
 const useSavedStock = () => {
     const { isLoading, data: savedStock, refetch } = useQuery('repoData', () =>
-        fetch('http://localhost:5000/stock').then(res =>
+        fetch('https://quikie-app.herokuapp.com/stock').then(res =>
             res.json()
         )
     )

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import useSavedStock from '../hooks/useSavedStock';
 const Detail = ({ stock }) => {
     const { name, symbol, market_cap, current_price, id } = stock; const [savedStatus, setSavedStatus] = useState(false);
-    const [savedStock, isLoading, refetch] = useSavedStock();
+    const [savedStock, , refetch] = useSavedStock();
     const navigate = useNavigate();
     useEffect(() => {
         savedStock?.forEach(s => {
@@ -15,7 +15,7 @@ const Detail = ({ stock }) => {
         })
     }, [id, savedStock])
     const handleSaved = () => {
-        fetch("http://localhost:5000/stock", {
+        fetch("https://quikie-app.herokuapp.com/stock", {
             method: "PUT",
             headers: {
                 "content-type": "application/json"

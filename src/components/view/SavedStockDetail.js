@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import useSavedStock from '../hooks/useSavedStock';
+import React from 'react';
 import { GoPrimitiveDot } from 'react-icons/go';
 import { toast } from 'react-toastify';
 
 const SavedStockDetail = ({ stock, refetch }) => {
     const { name, symbol, market_cap, current_price, id } = stock;
     const handleDelete = () => {
-        fetch(`http://localhost:5000/stock/${id}`, {
+        fetch(`https://quikie-app.herokuapp.com/stock/${id}`, {
             method: "DELETE",
             headers: {
                 "content-type": "application/json"
