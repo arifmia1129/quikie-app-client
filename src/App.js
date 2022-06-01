@@ -4,12 +4,14 @@ import Header from './components/Header';
 import Home from './components/Home';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
+import SavedStockDetails from './components/view/SavedStockDetails';
 function App() {
   return (
     <div>
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/view' element={<SavedStockDetails />} />
       </Routes>
       <ToastContainer />
     </div>

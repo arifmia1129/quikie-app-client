@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Detail from './Detail';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import useSavedStock from '../hooks/useSavedStock';
+import Loading from '../shared/Loading';
 
 const Details = () => {
     const [fullStocks, setFullStocks] = useState([]);
@@ -9,6 +11,7 @@ const Details = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [searchText, setSearchText] = useState("");
     const [searchStocks, setSearchStocks] = useState(null);
+    const [savedStock, isLoading, refetch] = useSavedStock();
     useEffect(() => {
         fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false")
             .then(res => res.json())
@@ -37,6 +40,9 @@ const Details = () => {
         if (currentPage > 0) {
             setCurrentPage(currentPage - 1);
         }
+    }
+    if (isLoading) {
+        return <Loading />
     }
     return (
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-6xl mx-auto my-10 border">
