@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import Detail from './Detail';
 
 const Details = () => {
-    const [stock, setStock] = useState([]);
+    const [stocks, setStocks] = useState([]);
     useEffect(() => {
         fetch("https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page=1&sparkline=false")
             .then(res => res.json())
-            .then(data => setStock(data))
+            .then(data => setStocks(data))
     }, [])
     return (
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-6xl mx-auto my-10 border">
@@ -40,31 +41,13 @@ const Details = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                            Apple MacBook Pro 17"
-                        </th>
-                        <td class="px-6 py-4">
-                            Sliver
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            Laptop
-                        </td>
-                        <td class="px-6 py-4">
-                            $2999
-                        </td>
-                    </tr>
-
+                    {
+                        stocks.map(stock => <Detail
+                            key={stock.id}
+                            stock={stock}
+                        />)
+                    }
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td>Hello</td>
-                    </tr>
-                </tfoot>
             </table>
         </div>
     );
