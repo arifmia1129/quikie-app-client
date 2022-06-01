@@ -1,10 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import useSavedStock from "../hooks/useSavedStock";
+import Loading from '../shared/Loading';
+import SavedStockDetail from './SavedStockDetail';
 
 const SavedStockDetails = () => {
     const [savedStock, isLoading, refetch] = useSavedStock();
+    const navigate = useNavigate();
     if (isLoading) {
-
+        return <Loading />
     }
     return (
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-6xl mx-auto my-10 border">
@@ -32,10 +36,18 @@ const SavedStockDetails = () => {
                     </tr>
                 </thead>
                 <tbody>
-
+                    {
+                        savedStock.map(stock => <SavedStockDetail
+                            key={stock.id}
+                            stock={stock}
+                            refetch={refetch}
+                        />)
+                    }
                 </tbody>
-
             </table>
+            <div className='py-5 mx-auto flex justify-center items-center'>
+                <button onClick={() => navigate(-1)} className='bg-[#6D5BD0] w-[99px] h-[40px] rounded-lg text-white'>Back</button>
+            </div>
         </div>
     );
 };

@@ -1,35 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { GoPrimitiveDot } from 'react-icons/go';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import useSavedStock from '../hooks/useSavedStock';
-const Detail = ({ stock }) => {
-    const { name, symbol, market_cap, current_price, id } = stock; const [savedStatus, setSavedStatus] = useState(false);
-    const [savedStock, isLoading, refetch] = useSavedStock();
-    const navigate = useNavigate();
-    useEffect(() => {
-        savedStock?.forEach(s => {
-            if (s.id === id) {
-                setSavedStatus(true);
-            }
-        })
-    }, [id, savedStock])
-    const handleSaved = () => {
-        fetch("http://localhost:5000/stock", {
-            method: "PUT",
+import { GoPrimitiveDot } from 'react-icons/go';
+import { toast } from 'react-toastify';
+
+const SavedStockDetail = ({ stock, refetch }) => {
+    const { name, symbol, market_cap, current_price, id } = stock;
+    const handleDelete = () => {
+        fetch(`http://localhost:5000/stock/${id}`, {
+            method: "DELETE",
             headers: {
                 "content-type": "application/json"
             },
-            body: JSON.stringify(stock)
         })
             .then(res => res.json())
             .then(result => {
                 if (result.acknowledged) {
-                    toast.success("Data saved success!");
+                    toast.error("Data delete success!");
                     refetch();
                 }
             })
-
     }
     return (
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -51,9 +40,7 @@ const Detail = ({ stock }) => {
                 {market_cap}
             </td>
             <td class="px-6 py-4">
-                {
-                    savedStatus ? <button onClick={() => navigate("/view")} className='bg-[#6D5BD0] w-[99px] h-[40px] rounded-lg text-white'>View</button> : <button onClick={handleSaved} className='bg-[#18A0FB] w-[130px] h-[40px] rounded-lg text-white'>Save Data</button>
-                }
+                <button onClick={handleDelete} className='bg-[#6D5BD0] w-[99px] h-[40px] rounded-lg text-white'>Delete</button>
             </td>
             <td class="px-6 py-4">
                 ${current_price}
@@ -64,4 +51,4 @@ const Detail = ({ stock }) => {
     );
 };
 
-export default Detail;
+export default SavedStockDetail;
