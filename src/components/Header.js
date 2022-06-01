@@ -4,7 +4,7 @@ import title from "../Assets/title.png";
 
 const Header = () => {
     return (
-        <div className='bg-[#031C47] flex justify-between items-center px-10 py-[11px]' height={76}>
+        <div className='bg-[#031c47cc] flex justify-between items-center px-10 py-[11px]' height={76}>
             <div className='hidden md:block'>
                 <Link to="/">
                     <img width={120} height={54} src={title} alt="" />
