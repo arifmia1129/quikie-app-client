@@ -15,7 +15,7 @@ const Detail = ({ stock }) => {
         })
     }, [id, savedStock])
     const handleSaved = () => {
-        fetch("https://quikie-app.herokuapp.com/stock", {
+        fetch("https://quikie-app-server.onrender.com/stock", {
             method: "PUT",
             headers: {
                 "content-type": "application/json"
